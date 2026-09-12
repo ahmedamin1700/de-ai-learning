@@ -44,6 +44,3 @@ def summarize(data: list[dict], key: str) -> dict:
         "most_common": most_common_val,
         "nulls": target.count(None)
     }
-
-
-print(clean_price("$12.5"))
