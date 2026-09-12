@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# Data files (often too large for git)
+data/raw/
+*.csv
+*.parquet
+
+# Secrets — NEVER commit these
+.env
+*.key
