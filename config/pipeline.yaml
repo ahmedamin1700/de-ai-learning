@@ -1,0 +1,16 @@
+pipeline:
+  name: orders-pipeline
+  version: "1.0"
+
+paths:
+  raw_input: data/raw/orders.csv
+  processed_output: data/processed/orders_clean.json
+  failed_output: data/processed/orders_failed.json
+
+processing:
+  required_fields:
+    - id
+    - city
+    - amount
+    - status
+  skip_null_amount: true

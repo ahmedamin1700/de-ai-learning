@@ -1,0 +1,6 @@
+id,city,amount,status
+1,Cairo,45.50,delivered
+2,Dubai,120.00,cancelled
+3,Cairo,,delivered
+4,Alexandria,30.00,delivered
+5,,15.00,pending
