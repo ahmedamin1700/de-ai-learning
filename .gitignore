@@ -12,3 +12,6 @@ data/raw/
 # Secrets — NEVER commit these
 .env
 *.key
+
+logs/*.log
+data/processed/*.json
