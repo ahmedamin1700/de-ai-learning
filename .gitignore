@@ -15,3 +15,6 @@ data/raw/
 
 logs/*.log
 data/processed/*.json
+__pycache__/
+*.egg-info/
+.eggs/
