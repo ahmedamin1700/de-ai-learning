@@ -1,0 +1,22 @@
+cities:
+  cairo:
+    lat: 30.06
+    lon: 31.24
+  dubai:
+    lat: 25.20
+    lon: 55.27
+  alexandria:
+    lat: 31.20
+    lon: 29.92
+  riyadh:
+    lat: 24.69
+    lon: 46.72
+  kuwait city:
+    lat: 29.37
+    lon: 47.98
+  amman:
+    lat: 31.95
+    lon: 35.93
+  beirut:
+    lat: 33.89
+    lon: 35.50
