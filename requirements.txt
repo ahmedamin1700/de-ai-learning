@@ -1,11 +1,16 @@
 certifi==2026.7.22
 charset-normalizer==3.5.1
+-e git+ssh://git@github.com/ahmedamin1700/de-ai-learning.git@b295e7fa6f0d3745a1dd9085cb485a83186eb3fe#egg=de_ai_learning
 idna==3.19
 markdown-it-py==4.2.0
 mdurl==0.1.2
+numpy==2.5.3
+pandas==3.0.5
 Pygments==2.21.0
+python-dateutil==2.9.0.post0
 python-dotenv==1.2.3
 PyYAML==6.0.3
 requests==2.34.2
 rich==15.0.0
+six==1.17.0
 urllib3==2.7.0

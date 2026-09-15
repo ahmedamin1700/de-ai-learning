@@ -1,0 +1,4 @@
+id,city,amount,status,is_high_value,avg_temp,max_temp,min_temp,record_count
+1,cairo,45.5,delivered,False,29.1,37.3,22.1,72
+2,dubai,120.0,cancelled,True,33.9,40.3,28.4,72
+4,alexandria,30.0,delivered,False,27.5,31.2,23.8,72
