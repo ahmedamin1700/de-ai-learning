@@ -164,6 +164,138 @@ def query_5() -> None:
     )
 
 
+def query_6() -> None:
+    """Multi-step CTE: delivered revenue by city, flag if exceeds 100."""
+    sql = """
+        -- TODO: Step 1 — CTE 'delivered': filter WHERE status = 'delivered'
+        -- TODO: Step 2 — CTE 'city_revenue': SUM(amount) per city from delivered
+        -- TODO: Step 3 — SELECT city, revenue, revenue > 100 AS exceeds_100
+        -- No subqueries allowed — CTEs only
+        WITH delivered AS (
+            SELECT * FROM deliveries WHERE status = 'delivered'
+        ),
+        city_revenue AS (
+            SELECT city, SUM(amount) AS revenue from delivered
+            GROUP BY city
+        )
+        SELECT city, revenue, revenue > 100 AS exceeds_100 FROM city_revenue;
+    """
+    run_query(
+        title="Query 6 — Delivered revenue by city",
+        query=sql,
+        columns=["city", "revenue", "exceeds_100"],
+    )
+
+
+def query_7() -> None:
+    """Three-step CTE: top order per city vs city average."""
+    sql = """
+        -- TODO: CTE 'ranked'    — add RANK() OVER (PARTITION BY city ORDER BY amount DESC)
+        -- TODO: CTE 'top_orders' — filter WHERE rank = 1
+        -- TODO: CTE 'city_avgs'  — compute AVG(amount) per city from deliveries
+        -- TODO: Final SELECT — join top_orders with city_avgs
+        -- Expected columns: city, top_amount, city_avg, diff (top_amount - city_avg, rounded 2dp)
+        WITH ranked AS (
+            SELECT *, RANK() OVER (PARTITION BY city ORDER BY amount DESC) AS rank
+            FROM deliveries
+        ),
+        top_orders AS (
+            SELECT * FROM ranked WHERE rank = 1
+        ),
+        city_avgs AS (
+            SELECT city, AVG(amount) AS city_avg FROM deliveries GROUP BY city
+        )
+        SELECT
+            t.city,
+            t.amount AS top_amount,
+            ROUND(c.city_avg, 2) AS city_avg,
+            ROUND(t.amount - c.city_avg, 2) AS diff
+        FROM top_orders AS t
+        LEFT JOIN city_avgs AS c
+            ON t.city = c.city
+    """
+    run_query(
+        title="Query 7 — Top order vs city average",
+        query=sql,
+        columns=["city", "top_amount", "city_avg", "diff"],
+    )
+
+
+def query_8() -> None:
+    """Recursive CTE: date series joined with deliveries."""
+    sql = """
+        -- TODO: Recursive CTE 'date_series'
+        --   Base case:    SELECT DATE '2026-09-01' AS date
+        --   Recursive:    SELECT date + INTERVAL '1 day' FROM date_series WHERE date < DATE '2026-09-07'
+        -- TODO: Left join date_series with deliveries on date = order_date
+        -- TODO: SUM(amount) per date, use COALESCE(..., 0) so missing days show 0
+        -- Expected columns: date, total_amount
+        WITH RECURSIVE date_series AS (
+            SELECT DATE '2026-09-01' AS date
+            UNION ALL
+            SELECT date + INTERVAL 1 DAY FROM date_series
+            WHERE date < DATE '2026-09-07'
+        )
+        SELECT
+            dates.date,
+            COALESCE(SUM(d.amount), 0) AS total_amount
+        FROM date_series AS dates
+        LEFT JOIN deliveries AS d
+        ON dates.date = d.order_date
+        GROUP BY 1
+        ORDER BY 1
+    """
+    run_query(
+        title="Query 8 — Daily totals with date series",
+        query=sql,
+        columns=["date", "total_amount"],
+    )
+
+
+def query_9() -> None:
+    """Rewrite a correlated subquery using a CTE."""
+    # Original slow query (correlated subquery — runs once per row):
+    # SELECT *
+    # FROM deliveries d1
+    # WHERE d1.amount > (
+    #     SELECT AVG(d2.amount)
+    #     FROM deliveries d2
+    #     WHERE d2.city = d1.city
+    # )
+    # ORDER BY d1.city, d1.amount DESC;
+
+    sql = """
+        -- TODO: CTE 'city_avgs' — compute AVG(amount) per city once
+        -- TODO: JOIN deliveries with city_avgs on city
+        -- TODO: Filter WHERE amount > city_avg
+        -- TODO: SELECT only: id, city, amount, status, city_avg (rounded 2dp)
+        -- TODO: ORDER BY city, amount DESC
+
+        -- After writing the query, run EXPLAIN on both versions in a separate
+        -- duckdb.connect() block below and add a comment here about what you observe.
+        WITH city_avgs AS (
+            SELECT city, AVG(amount) AS city_avg
+            FROM deliveries
+            GROUP BY city
+        )
+        SELECT
+            d.id,
+            d.city,
+            d.amount,
+            d.status,
+            ROUND(c.city_avg, 2) AS city_avg
+        FROM deliveries AS d
+        LEFT JOIN city_avgs AS c
+        ON d.city = c.city
+        WHERE d.amount > c.city_avg
+    """
+    run_query(
+        title="Query 9 — Optimized: above-average orders per city",
+        query=sql,
+        columns=["id", "city", "amount", "status", "city_avg"],
+    )
+
+
 if __name__ == "__main__":
     seed_data()
     query_1()
@@ -171,3 +303,7 @@ if __name__ == "__main__":
     query_3()
     query_4()
     query_5()
+    query_6()
+    query_7()
+    query_8()
+    query_9()
