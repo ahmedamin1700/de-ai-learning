@@ -1,0 +1,6 @@
+weather_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: /app/data/warehouse.db
