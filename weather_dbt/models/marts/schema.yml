@@ -23,3 +23,14 @@ models:
         description: "Average temperature across all weather readings for this city."
       - name: avg_revenue_per_degree
         description: "Average revenue-per-degree metric across all orders in this city."
+
+  - name: mart_restaurant_summary
+    columns:
+      - name: restaurant_name
+        tests:
+          - not_null
+          - unique
+      - name: total_revenue
+        tests:
+          - not_null
+

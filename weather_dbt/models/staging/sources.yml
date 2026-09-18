@@ -36,3 +36,10 @@ sources:
             description: "Minimum recorded temperature."
           - name: record_count
             description: "Number of readings aggregated."
+
+  - name: seeds
+    description: "Static seed data loaded via dbt seed"
+    schema: main
+    tables:
+      - name: raw_orders
+        description: "Raw order records seeded from CSV."
