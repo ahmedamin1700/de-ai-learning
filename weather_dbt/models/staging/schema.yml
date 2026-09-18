@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_deliveries
+    description: "Cleaned delivery orders from raw source"
+    columns:
+      - name: delivery_id
+        description: "Unique order identifier"
+        tests:
+          - unique
+          - not_null
+      - name: city
+        tests:
+          - not_null
+      - name: status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['delivered', 'cancelled']
+      - name: amount
+        tests:
+          - not_null
+
+  - name: stg_weather
+    description: "Cleaned weather summary by city"
+    columns:
+      - name: city
+        tests:
+          - not_null
+          - unique
+      - name: avg_temp
+        tests:
+          - not_null

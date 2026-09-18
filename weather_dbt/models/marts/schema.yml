@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: mart_city_summary
+    description: "City-level order and weather summary for BI"
+    columns:
+      - name: city
+        tests:
+          - not_null
+          - unique
+      - name: total_revenue
+        tests:
+          - not_null
