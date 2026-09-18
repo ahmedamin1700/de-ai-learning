@@ -1,10 +1,25 @@
 version: 2
 
 models:
-  - name: int_orders_enriched
-    description: "Deliveries joined with weather data. Used as input to mart layer — not exposed to BI tools directly."
+  - name: mart_city_summary
+    description: "City-level order and weather summary for BI"
     columns:
-      - name: delivery_id
-        description: "Unique order identifier, carried from stg_deliveries."
-      - name: revenue_per_degree
-        description: "Order amount divided by the city's average temperature. Proxy metric for temperature sensitivity."
+      - name: city
+        description: "Lowercase city name."
+        tests:
+          - not_null
+          - unique
+      - name: total_orders
+        description: "Total number of orders placed in this city."
+      - name: total_revenue
+        description: "Sum of all order amounts in this city."
+        tests:
+          - not_null
+      - name: avg_order_value
+        description: "Average order amount, rounded to 2 decimal places."
+      - name: delivered_count
+        description: "Number of orders with status 'delivered'."
+      - name: avg_temp
+        description: "Average temperature across all weather readings for this city."
+      - name: avg_revenue_per_degree
+        description: "Average revenue-per-degree metric across all orders in this city."

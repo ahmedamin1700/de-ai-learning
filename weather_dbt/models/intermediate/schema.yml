@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: int_orders_enriched
+    description: "Deliveries joined with weather data. Used as input to mart layer — not exposed to BI tools directly."
+    columns:
+      - name: delivery_id
+        description: "Unique order identifier, carried from stg_deliveries."
+      - name: revenue_per_degree
+        description: "Order amount divided by the city's average temperature. Proxy metric for temperature sensitivity."
