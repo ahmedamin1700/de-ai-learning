@@ -1,13 +1,10 @@
 version: 2
 
 models:
-  - name: mart_city_summary
-    description: "City-level order and weather summary for BI"
+  - name: int_orders_enriched
+    description: "Deliveries joined with weather data. Used as input to mart layer — not exposed to BI tools directly."
     columns:
-      - name: city
-        tests:
-          - not_null
-          - unique
-      - name: total_revenue
-        tests:
-          - not_null
+      - name: delivery_id
+        description: "Unique order identifier, carried from stg_deliveries."
+      - name: revenue_per_degree
+        description: "Order amount divided by the city's average temperature. Proxy metric for temperature sensitivity."

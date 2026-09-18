@@ -2,32 +2,47 @@ version: 2
 
 models:
   - name: stg_deliveries
-    description: "Cleaned delivery orders from raw source"
+    description: "Cleaned and type-cast delivery orders. Rows with null or non-numeric amounts are excluded."
     columns:
       - name: delivery_id
-        description: "Unique order identifier"
+        description: "Unique identifier for each delivery order."
         tests:
           - unique
           - not_null
       - name: city
+        description: "Lowercase city name where the order was placed."
         tests:
           - not_null
       - name: status
+        description: "Final delivery status. Either 'delivered' or 'cancelled'."
         tests:
           - not_null
           - accepted_values:
               values: ['delivered', 'cancelled']
       - name: amount
+        description: "Order value in local currency. Guaranteed non-null after staging filter."
         tests:
           - not_null
+      - name: is_high_value
+        description: "True if amount exceeds 50."
+      - name: order_date
+        description: "Date the order was placed."
 
   - name: stg_weather
-    description: "Cleaned weather summary by city"
+    description: "Aggregated weather readings by city, sourced from Open-Meteo API."
     columns:
       - name: city
+        description: "Lowercase city name. One row per city."
         tests:
           - not_null
           - unique
       - name: avg_temp
+        description: "Average temperature in Celsius across all recorded readings."
         tests:
           - not_null
+      - name: max_temp
+        description: "Maximum recorded temperature in Celsius."
+      - name: min_temp
+        description: "Minimum recorded temperature in Celsius."
+      - name: record_count
+        description: "Number of weather readings that make up this aggregate."
