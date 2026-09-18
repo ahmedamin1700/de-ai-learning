@@ -7,7 +7,7 @@ SELECT
   CAST(order_date AS DATE) AS order_date,
   {{ cents_to_dollars('TRY_CAST(amount AS DOUBLE)') }} AS amount_usd,
   {{ classify_order('amount', 100, 50) }} AS order_tier
-FROM deliveries
+FROM {{ source('warehouse', 'deliveries') }}
 WHERE TRY_CAST(amount AS DOUBLE) IS NOT NULL
 AND TRIM(city) != ''
 AND city IS NOT NULL

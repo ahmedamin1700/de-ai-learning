@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: warehouse
+    description: "Raw tables loaded into the local DuckDB warehouse"
+    schema: main
+    # loaded_at_field: order_date
+    # freshness:
+    #   warn_after: {count: 30, period: day}
+    #   error_after: {count: 90, period: day}
+    tables:
+      - name: deliveries
+        description: "Raw delivery orders from the orders pipeline."
+        columns:
+          - name: id
+            description: "Raw order identifier."
+          - name: city
+            description: "Raw city name — may have inconsistent casing."
+          - name: status
+            description: "Raw status string."
+          - name: amount
+            description: "Raw order amount — may be string or null."
+          - name: order_date
+            description: "Order date as string."
+
+      - name: weather_summary
+        description: "Aggregated weather data fetched from Open-Meteo API."
+        columns:
+          - name: city
+            description: "City name."
+          - name: avg_temp
+            description: "Average temperature in Celsius."
+          - name: max_temp
+            description: "Maximum recorded temperature."
+          - name: min_temp
+            description: "Minimum recorded temperature."
+          - name: record_count
+            description: "Number of readings aggregated."
