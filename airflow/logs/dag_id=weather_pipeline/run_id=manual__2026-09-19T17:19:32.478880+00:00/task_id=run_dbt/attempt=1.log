@@ -1,0 +1,49 @@
+[2026-09-19T17:19:38.070+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-09-19T17:19:38.120+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_pipeline.run_dbt manual__2026-09-19T17:19:32.478880+00:00 [queued]>
+[2026-09-19T17:19:38.134+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_pipeline.run_dbt manual__2026-09-19T17:19:32.478880+00:00 [queued]>
+[2026-09-19T17:19:38.135+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-09-19T17:19:38.152+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): run_dbt> on 2026-09-19 17:19:32.478880+00:00
+[2026-09-19T17:19:38.160+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'weather_pipeline', 'run_dbt', 'manual__2026-09-19T17:19:32.478880+00:00', '--job-id', '16', '--raw', '--subdir', 'DAGS_FOLDER/weather_pipeline_dag.py', '--cfg-path', '/tmp/tmp_pa74yb4']
+[2026-09-19T17:19:38.163+0000] {standard_task_runner.py:91} INFO - Job 16: Subtask run_dbt
+[2026-09-19T17:19:38.165+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=485) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-09-19T17:19:38.166+0000] {standard_task_runner.py:64} INFO - Started process 486 to run task
+[2026-09-19T17:19:38.237+0000] {task_command.py:426} INFO - Running <TaskInstance: weather_pipeline.run_dbt manual__2026-09-19T17:19:32.478880+00:00 [running]> on host db333aec3d12
+[2026-09-19T17:19:38.373+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='weather_pipeline' AIRFLOW_CTX_TASK_ID='run_dbt' AIRFLOW_CTX_EXECUTION_DATE='2026-09-19T17:19:32.478880+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-19T17:19:32.478880+00:00'
+[2026-09-19T17:19:38.374+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-09-19T17:19:38.391+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-09-19T17:19:38.391+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/***/project/weather_dbt && dbt run --profiles-dir .']
+[2026-09-19T17:19:38.402+0000] {subprocess.py:86} INFO - Output:
+[2026-09-19T17:19:42.378+0000] {subprocess.py:93} INFO - [0m17:19:42  Running with dbt=1.12.5
+[2026-09-19T17:19:42.868+0000] {subprocess.py:93} INFO - [0m17:19:42  Registered adapter: duckdb=1.11.0
+[2026-09-19T17:19:43.766+0000] {subprocess.py:93} INFO - [0m17:19:43  Found 8 models, 1 snapshot, 22 data tests, 1 seed, 3 sources, 503 macros
+[2026-09-19T17:19:43.770+0000] {subprocess.py:93} INFO - [0m17:19:43
+[2026-09-19T17:19:43.771+0000] {subprocess.py:93} INFO - [0m17:19:43  Concurrency: 1 threads (target='dev')
+[2026-09-19T17:19:43.771+0000] {subprocess.py:93} INFO - [0m17:19:43
+[2026-09-19T17:19:44.060+0000] {subprocess.py:93} INFO - [0m17:19:44  1 of 8 START sql view model main.stg_deliveries ................................ [RUN]
+[2026-09-19T17:19:44.340+0000] {subprocess.py:93} INFO - [0m17:19:44  1 of 8 OK created sql view model main.stg_deliveries ........................... [[32mOK[0m in 0.28s]
+[2026-09-19T17:19:44.343+0000] {subprocess.py:93} INFO - [0m17:19:44  2 of 8 START sql view model main.stg_orders .................................... [RUN]
+[2026-09-19T17:19:44.395+0000] {subprocess.py:93} INFO - [0m17:19:44  2 of 8 OK created sql view model main.stg_orders ............................... [[32mOK[0m in 0.05s]
+[2026-09-19T17:19:44.398+0000] {subprocess.py:93} INFO - [0m17:19:44  3 of 8 START sql view model main.stg_weather ................................... [RUN]
+[2026-09-19T17:19:44.444+0000] {subprocess.py:93} INFO - [0m17:19:44  3 of 8 OK created sql view model main.stg_weather .............................. [[32mOK[0m in 0.04s]
+[2026-09-19T17:19:44.448+0000] {subprocess.py:93} INFO - [0m17:19:44  4 of 8 START sql view model main.int_orders_by_restaurant ...................... [RUN]
+[2026-09-19T17:19:44.493+0000] {subprocess.py:93} INFO - [0m17:19:44  4 of 8 OK created sql view model main.int_orders_by_restaurant ................. [[32mOK[0m in 0.04s]
+[2026-09-19T17:19:44.496+0000] {subprocess.py:93} INFO - [0m17:19:44  5 of 8 START sql table model main.mart_city_orders ............................. [RUN]
+[2026-09-19T17:19:44.645+0000] {subprocess.py:93} INFO - [0m17:19:44  5 of 8 OK created sql table model main.mart_city_orders ........................ [[32mOK[0m in 0.15s]
+[2026-09-19T17:19:44.648+0000] {subprocess.py:93} INFO - [0m17:19:44  6 of 8 START sql view model main.int_orders_enriched ........................... [RUN]
+[2026-09-19T17:19:44.696+0000] {subprocess.py:93} INFO - [0m17:19:44  6 of 8 OK created sql view model main.int_orders_enriched ...................... [[32mOK[0m in 0.05s]
+[2026-09-19T17:19:44.699+0000] {subprocess.py:93} INFO - [0m17:19:44  7 of 8 START sql table model main.mart_restaurant_summary ...................... [RUN]
+[2026-09-19T17:19:44.754+0000] {subprocess.py:93} INFO - [0m17:19:44  7 of 8 OK created sql table model main.mart_restaurant_summary ................. [[32mOK[0m in 0.05s]
+[2026-09-19T17:19:44.756+0000] {subprocess.py:93} INFO - [0m17:19:44  8 of 8 START sql table model main.mart_city_summary ............................ [RUN]
+[2026-09-19T17:19:44.813+0000] {subprocess.py:93} INFO - [0m17:19:44  8 of 8 OK created sql table model main.mart_city_summary ....................... [[32mOK[0m in 0.05s]
+[2026-09-19T17:19:44.823+0000] {subprocess.py:93} INFO - [0m17:19:44
+[2026-09-19T17:19:44.823+0000] {subprocess.py:93} INFO - [0m17:19:44  Finished running 3 table models, 5 view models in 0 hours 0 minutes and 1.05 seconds (1.05s).
+[2026-09-19T17:19:44.907+0000] {subprocess.py:93} INFO - [0m17:19:44
+[2026-09-19T17:19:44.908+0000] {subprocess.py:93} INFO - [0m17:19:44  [32mCompleted successfully[0m
+[2026-09-19T17:19:44.908+0000] {subprocess.py:93} INFO - [0m17:19:44
+[2026-09-19T17:19:44.909+0000] {subprocess.py:93} INFO - [0m17:19:44  Done. PASS=8 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=8
+[2026-09-19T17:19:46.116+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2026-09-19T17:19:46.117+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-09-19T17:19:46.159+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=weather_pipeline, task_id=run_dbt, run_id=manual__2026-09-19T17:19:32.478880+00:00, execution_date=20260919T171932, start_date=20260919T171938, end_date=20260919T171946
+[2026-09-19T17:19:46.182+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-09-19T17:19:46.207+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-19T17:19:46.210+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

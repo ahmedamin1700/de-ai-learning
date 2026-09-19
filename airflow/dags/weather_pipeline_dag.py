@@ -24,6 +24,36 @@ def fetch_weather():
     print(f"Fetched {len(records)} records")
 
 
+def load_to_warehouse():
+    import sys
+    sys.path.insert(0, "/opt/airflow/project")
+    import duckdb
+    import json
+
+    db_path = "/opt/airflow/project/data/warehouse.db"
+    raw_path = "/opt/airflow/project/data/weather_raw.json"
+
+    with open(raw_path) as f:
+        records = json.load(f)
+
+    with duckdb.connect(db_path) as con:
+        con.execute("""
+            CREATE TABLE IF NOT EXISTS weather_raw (
+                city VARCHAR,
+                time VARCHAR,
+                temperature_c DOUBLE
+            )
+        """)
+        con.execute("DELETE FROM weather_raw")
+        for r in records:
+            con.execute(
+                "INSERT INTO weather_raw VALUES (?, ?, ?)",
+                [r.get("city"), r.get("time"), r.get("temperature_c")]
+            )
+        count = con.execute("SELECT COUNT(*) FROM weather_raw").fetchone()[0]
+        print(f"Loaded {count} rows into weather_raw")
+
+
 def aggregate_weather():
     import sys
     sys.path.insert(0, "/opt/airflow/project")
@@ -109,6 +139,11 @@ with DAG(
         python_callable=aggregate_weather,
     )
 
+    load_task = PythonOperator(
+        task_id="load_to_warehouse",
+        python_callable=load_to_warehouse,
+    )
+
     log_task = PythonOperator(
         task_id="log_city_stats",
         python_callable=log_city_stats,
@@ -121,7 +156,7 @@ with DAG(
 
     dbt_task = BashOperator(
         task_id="run_dbt",
-        bash_command="cd /opt/airflow/project/weather_dbt && dbt run --profiles-dir .",
+        bash_command="cd /opt/airflow/project/weather_dbt && dbt run --profiles-dir /opt/airflow/project/airflow/",
     )
 
-    fetch_task >> wait_for_raw_data >> validate_task >> aggregate_task >> [dbt_task, log_task]
+    fetch_task >> wait_for_raw_data >> validate_task >> load_task >> dbt_task

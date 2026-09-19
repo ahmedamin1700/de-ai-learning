@@ -3,4 +3,4 @@ weather_dbt:
   outputs:
     dev:
       type: duckdb
-      path: /app/data/warehouse.db
+      path: /home/aminoacid/Projects/de-ai-learning/data/warehouse.db

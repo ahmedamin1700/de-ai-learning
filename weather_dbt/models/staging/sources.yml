@@ -37,6 +37,16 @@ sources:
           - name: record_count
             description: "Number of readings aggregated."
 
+      - name: weather_raw
+        description: "Raw individual weather readings loaded from Open-Meteo API."
+        columns:
+          - name: city
+            description: "City name as returned by the API."
+          - name: time
+            description: "Timestamp of the reading."
+          - name: temperature_c
+            description: "Temperature in Celsius."
+
   - name: seeds
     description: "Static seed data loaded via dbt seed"
     schema: main
