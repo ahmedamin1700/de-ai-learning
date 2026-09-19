@@ -1,0 +1,41 @@
+[2026-09-19T16:55:41.924+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-09-19T16:55:41.981+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_pipeline.fetch_weather manual__2026-09-19T16:55:40.816241+00:00 [queued]>
+[2026-09-19T16:55:41.995+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_pipeline.fetch_weather manual__2026-09-19T16:55:40.816241+00:00 [queued]>
+[2026-09-19T16:55:41.995+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-09-19T16:55:42.017+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): fetch_weather> on 2026-09-19 16:55:40.816241+00:00
+[2026-09-19T16:55:42.025+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'weather_pipeline', 'fetch_weather', 'manual__2026-09-19T16:55:40.816241+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/weather_pipeline_dag.py', '--cfg-path', '/tmp/tmphuq1pg8d']
+[2026-09-19T16:55:42.029+0000] {standard_task_runner.py:91} INFO - Job 3: Subtask fetch_weather
+[2026-09-19T16:55:42.032+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=194) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-09-19T16:55:42.033+0000] {standard_task_runner.py:64} INFO - Started process 195 to run task
+[2026-09-19T16:55:42.105+0000] {task_command.py:426} INFO - Running <TaskInstance: weather_pipeline.fetch_weather manual__2026-09-19T16:55:40.816241+00:00 [running]> on host db333aec3d12
+[2026-09-19T16:55:42.246+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='weather_pipeline' AIRFLOW_CTX_TASK_ID='fetch_weather' AIRFLOW_CTX_EXECUTION_DATE='2026-09-19T16:55:40.816241+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-19T16:55:40.816241+00:00'
+[2026-09-19T16:55:42.247+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-09-19T16:55:42.285+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-09-19T16:55:42.285+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/weather_pipeline_dag.py", line 23, in fetch_weather
+    records = fetch_cities(cities)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/project/src/api/weather.py", line 92, in fetch_cities
+    data = get_weather(city["lat"], city["lon"])
+                       ~~~~^^^^^^^
+TypeError: string indices must be integers, not 'str'
+[2026-09-19T16:55:42.303+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=weather_pipeline, task_id=fetch_weather, run_id=manual__2026-09-19T16:55:40.816241+00:00, execution_date=20260919T165540, start_date=20260919T165541, end_date=20260919T165542
+[2026-09-19T16:55:42.319+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 3 for task fetch_weather (string indices must be integers, not 'str'; 195)
+[2026-09-19T16:55:42.327+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-09-19T16:55:42.348+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

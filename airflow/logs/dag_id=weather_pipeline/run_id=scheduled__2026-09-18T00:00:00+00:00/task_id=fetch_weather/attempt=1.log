@@ -1,0 +1,144 @@
+[2026-09-19T16:55:33.596+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-09-19T16:55:33.655+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [queued]>
+[2026-09-19T16:55:33.666+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [queued]>
+[2026-09-19T16:55:33.667+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-09-19T16:55:33.685+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): fetch_weather> on 2026-09-18 00:00:00+00:00
+[2026-09-19T16:55:33.694+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'weather_pipeline', 'fetch_weather', 'scheduled__2026-09-18T00:00:00+00:00', '--job-id', '2', '--raw', '--subdir', 'DAGS_FOLDER/weather_pipeline_dag.py', '--cfg-path', '/tmp/tmp0v5vn2hv']
+[2026-09-19T16:55:33.696+0000] {standard_task_runner.py:91} INFO - Job 2: Subtask fetch_weather
+[2026-09-19T16:55:33.698+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=187) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-09-19T16:55:33.699+0000] {standard_task_runner.py:64} INFO - Started process 188 to run task
+[2026-09-19T16:55:33.799+0000] {task_command.py:426} INFO - Running <TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [running]> on host db333aec3d12
+[2026-09-19T16:55:33.933+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='weather_pipeline' AIRFLOW_CTX_TASK_ID='fetch_weather' AIRFLOW_CTX_EXECUTION_DATE='2026-09-18T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-09-18T00:00:00+00:00'
+[2026-09-19T16:55:33.934+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-09-19T16:55:33.982+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-09-19T16:55:33.983+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/weather_pipeline_dag.py", line 23, in fetch_weather
+    records = fetch_cities(cities)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/project/src/api/weather.py", line 92, in fetch_cities
+    data = get_weather(city["lat"], city["lon"])
+                       ~~~~^^^^^^^
+TypeError: string indices must be integers, not 'str'
+[2026-09-19T16:55:33.999+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=weather_pipeline, task_id=fetch_weather, run_id=scheduled__2026-09-18T00:00:00+00:00, execution_date=20260918T000000, start_date=20260919T165533, end_date=20260919T165533
+[2026-09-19T16:55:34.017+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 2 for task fetch_weather (string indices must be integers, not 'str'; 188)
+[2026-09-19T16:55:34.033+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-09-19T16:55:34.069+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-19T16:55:34.072+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-09-19T17:04:40.077+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-09-19T17:04:40.127+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [queued]>
+[2026-09-19T17:04:40.140+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [queued]>
+[2026-09-19T17:04:40.141+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-09-19T17:04:40.162+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): fetch_weather> on 2026-09-18 00:00:00+00:00
+[2026-09-19T17:04:40.170+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'weather_pipeline', 'fetch_weather', 'scheduled__2026-09-18T00:00:00+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/weather_pipeline_dag.py', '--cfg-path', '/tmp/tmph0chkleo']
+[2026-09-19T17:04:40.173+0000] {standard_task_runner.py:91} INFO - Job 6: Subtask fetch_weather
+[2026-09-19T17:04:40.175+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=290) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-09-19T17:04:40.176+0000] {standard_task_runner.py:64} INFO - Started process 291 to run task
+[2026-09-19T17:04:40.251+0000] {task_command.py:426} INFO - Running <TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [running]> on host db333aec3d12
+[2026-09-19T17:04:40.415+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='weather_pipeline' AIRFLOW_CTX_TASK_ID='fetch_weather' AIRFLOW_CTX_EXECUTION_DATE='2026-09-18T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-09-18T00:00:00+00:00'
+[2026-09-19T17:04:40.416+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-09-19T17:04:40.763+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:04:41.071+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:04:41.378+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:04:41.705+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:04:42.013+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:04:42.327+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:04:42.638+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:04:42.639+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-09-19T17:04:42.640+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/weather_pipeline_dag.py", line 27, in fetch_weather
+    write_json(records, "/opt/airflow/project/data/weather_raw.json")
+  File "/opt/airflow/project/src/io/file_ops.py", line 52, in write_json
+    with open(filepath, "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/opt/airflow/project/data/weather_raw.json'
+[2026-09-19T17:04:42.660+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=weather_pipeline, task_id=fetch_weather, run_id=scheduled__2026-09-18T00:00:00+00:00, execution_date=20260918T000000, start_date=20260919T170440, end_date=20260919T170442
+[2026-09-19T17:04:42.679+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 6 for task fetch_weather ([Errno 13] Permission denied: '/opt/airflow/project/data/weather_raw.json'; 291)
+[2026-09-19T17:04:42.719+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-09-19T17:04:42.759+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-19T17:04:42.761+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-09-19T17:09:11.621+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-09-19T17:09:11.669+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [queued]>
+[2026-09-19T17:09:11.680+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [queued]>
+[2026-09-19T17:09:11.680+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-09-19T17:09:11.700+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): fetch_weather> on 2026-09-18 00:00:00+00:00
+[2026-09-19T17:09:11.708+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'weather_pipeline', 'fetch_weather', 'scheduled__2026-09-18T00:00:00+00:00', '--job-id', '7', '--raw', '--subdir', 'DAGS_FOLDER/weather_pipeline_dag.py', '--cfg-path', '/tmp/tmp3aw6j7p_']
+[2026-09-19T17:09:11.711+0000] {standard_task_runner.py:91} INFO - Job 7: Subtask fetch_weather
+[2026-09-19T17:09:11.713+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=337) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-09-19T17:09:11.714+0000] {standard_task_runner.py:64} INFO - Started process 338 to run task
+[2026-09-19T17:09:11.782+0000] {task_command.py:426} INFO - Running <TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [running]> on host db333aec3d12
+[2026-09-19T17:09:11.907+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='weather_pipeline' AIRFLOW_CTX_TASK_ID='fetch_weather' AIRFLOW_CTX_EXECUTION_DATE='2026-09-18T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-09-18T00:00:00+00:00'
+[2026-09-19T17:09:11.909+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-09-19T17:09:12.246+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:09:12.627+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:09:12.951+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:09:13.259+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:09:13.556+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:09:13.855+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:09:14.160+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:09:14.166+0000] {file_ops.py:54} INFO - 504 added to the file: /opt/***/project/data/weather_raw.json
+[2026-09-19T17:09:14.167+0000] {logging_mixin.py:188} INFO - Fetched 504 records
+[2026-09-19T17:09:14.167+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-09-19T17:09:14.167+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-09-19T17:09:14.187+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=weather_pipeline, task_id=fetch_weather, run_id=scheduled__2026-09-18T00:00:00+00:00, execution_date=20260918T000000, start_date=20260919T170911, end_date=20260919T170914
+[2026-09-19T17:09:14.221+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-09-19T17:09:14.263+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-19T17:09:14.266+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-09-19T17:11:43.528+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-09-19T17:11:43.583+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [queued]>
+[2026-09-19T17:11:43.596+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [queued]>
+[2026-09-19T17:11:43.597+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-09-19T17:11:43.617+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): fetch_weather> on 2026-09-18 00:00:00+00:00
+[2026-09-19T17:11:43.627+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'weather_pipeline', 'fetch_weather', 'scheduled__2026-09-18T00:00:00+00:00', '--job-id', '10', '--raw', '--subdir', 'DAGS_FOLDER/weather_pipeline_dag.py', '--cfg-path', '/tmp/tmpkbi559ie']
+[2026-09-19T17:11:43.631+0000] {standard_task_runner.py:91} INFO - Job 10: Subtask fetch_weather
+[2026-09-19T17:11:43.635+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=370) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-09-19T17:11:43.636+0000] {standard_task_runner.py:64} INFO - Started process 371 to run task
+[2026-09-19T17:11:43.707+0000] {task_command.py:426} INFO - Running <TaskInstance: weather_pipeline.fetch_weather scheduled__2026-09-18T00:00:00+00:00 [running]> on host db333aec3d12
+[2026-09-19T17:11:43.847+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='weather_pipeline' AIRFLOW_CTX_TASK_ID='fetch_weather' AIRFLOW_CTX_EXECUTION_DATE='2026-09-18T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-09-18T00:00:00+00:00'
+[2026-09-19T17:11:43.848+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-09-19T17:11:44.176+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:11:44.477+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:11:44.779+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:11:45.086+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:11:45.387+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:11:45.694+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:11:46.009+0000] {weather.py:76} INFO - Successfully fetched weather data.
+[2026-09-19T17:11:46.017+0000] {file_ops.py:54} INFO - 504 added to the file: /opt/***/project/data/weather_raw.json
+[2026-09-19T17:11:46.018+0000] {logging_mixin.py:188} INFO - Fetched 504 records
+[2026-09-19T17:11:46.018+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-09-19T17:11:46.019+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-09-19T17:11:46.036+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=weather_pipeline, task_id=fetch_weather, run_id=scheduled__2026-09-18T00:00:00+00:00, execution_date=20260918T000000, start_date=20260919T171143, end_date=20260919T171146
+[2026-09-19T17:11:46.099+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-09-19T17:11:46.145+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-19T17:11:46.149+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
