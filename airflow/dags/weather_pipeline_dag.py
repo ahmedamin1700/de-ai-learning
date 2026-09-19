@@ -2,6 +2,7 @@ from datetime import datetime
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
+from airflow.sensors.filesystem import FileSensor
 
 default_args = {
     "owner": "airflow",
@@ -45,6 +46,22 @@ def aggregate_weather():
     print(f"Aggregated {len(summary)} cities")
 
 
+def validate_raw_data():
+    import json
+    with open("/opt/airflow/project/data/weather_raw.json") as f:
+        records = json.load(f)
+    if not records:
+        raise ValueError("weather_raw.json is empty — nothing to aggregate")
+    print(f"Validation passed: {len(records)} records found")
+
+
+def log_city_stats():
+    import pandas as pd
+    df = pd.read_csv("/opt/airflow/project/data/weather_summary.csv")
+    for _, row in df.iterrows():
+        print(f"{row['city']}: avg={row['avg_temp']}°C max={row['max_temp']}°C")
+
+
 with DAG(
     dag_id="weather_pipeline",
     default_args=default_args,
@@ -59,9 +76,27 @@ with DAG(
         python_callable=fetch_weather,
     )
 
+    wait_for_raw_data = FileSensor(
+        task_id="wait_for_raw_data",
+        filepath="/opt/airflow/project/data/weather_raw.json",
+        poke_interval=10,     # check every 10 seconds
+        timeout=120,          # fail after 2 minutes
+        mode="poke",
+    )
+
     aggregate_task = PythonOperator(
         task_id="aggregate_weather",
         python_callable=aggregate_weather,
+    )
+
+    log_task = PythonOperator(
+        task_id="log_city_stats",
+        python_callable=log_city_stats,
+    )
+
+    validate_task = PythonOperator(
+        task_id="validate_raw_data",
+        python_callable=validate_raw_data,
     )
 
     dbt_task = BashOperator(
@@ -69,4 +104,4 @@ with DAG(
         bash_command="cd /opt/airflow/project/weather_dbt && dbt run --profiles-dir .",
     )
 
-    fetch_task >> aggregate_task >> dbt_task
+    fetch_task >> wait_for_raw_data >> validate_task >> aggregate_task >> [dbt_task, log_task]
