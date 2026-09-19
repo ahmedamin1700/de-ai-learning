@@ -1,13 +1,8 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 from airflow.sensors.filesystem import FileSensor
-
-default_args = {
-    "owner": "airflow",
-    "retries": 1,
-}
 
 
 def fetch_weather():
@@ -46,6 +41,10 @@ def aggregate_weather():
     print(f"Aggregated {len(summary)} cities")
 
 
+# def validate_raw_data():
+#     raise ValueError("Simulated failure to test callback")
+
+
 def validate_raw_data():
     import json
     with open("/opt/airflow/project/data/weather_raw.json") as f:
@@ -62,6 +61,22 @@ def log_city_stats():
         print(f"{row['city']}: avg={row['avg_temp']}°C max={row['max_temp']}°C")
 
 
+def on_task_failure(context):
+    task_id = context["task_instance"].task_id
+    dag_id = context["task_instance"].dag_id
+    execution_date = context["execution_date"]
+    print(f"ALERT: Task '{task_id}' in DAG '{dag_id}' failed at {execution_date}")
+    print(f"Log URL: {context['task_instance'].log_url}")
+
+
+default_args = {
+    "owner": "airflow",
+    "retries": 1,
+    "retry_delay": timedelta(seconds=30),
+    "on_failure_callback": on_task_failure,
+}
+
+
 with DAG(
     dag_id="weather_pipeline",
     default_args=default_args,
@@ -69,11 +84,16 @@ with DAG(
     schedule="@daily",
     catchup=False,
     tags=["weather", "pipeline"],
+    dagrun_timeout=timedelta(minutes=10),
 ) as dag:
 
     fetch_task = PythonOperator(
         task_id="fetch_weather",
         python_callable=fetch_weather,
+        retries=3,
+        retry_delay=timedelta(seconds=30),
+        retry_exponential_backoff=True,   # 30s, 60s, 120s
+        execution_timeout=timedelta(minutes=5),
     )
 
     wait_for_raw_data = FileSensor(
