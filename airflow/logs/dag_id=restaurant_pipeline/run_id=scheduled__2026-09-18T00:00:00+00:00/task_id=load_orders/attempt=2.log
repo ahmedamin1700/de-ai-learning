@@ -1,0 +1,43 @@
+[2026-09-19T21:07:16.918+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-09-19T21:07:16.971+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: restaurant_pipeline.load_orders scheduled__2026-09-18T00:00:00+00:00 [queued]>
+[2026-09-19T21:07:16.983+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: restaurant_pipeline.load_orders scheduled__2026-09-18T00:00:00+00:00 [queued]>
+[2026-09-19T21:07:16.983+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-09-19T21:07:17.001+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): load_orders> on 2026-09-18 00:00:00+00:00
+[2026-09-19T21:07:17.010+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'restaurant_pipeline', 'load_orders', 'scheduled__2026-09-18T00:00:00+00:00', '--job-id', '49', '--raw', '--subdir', 'DAGS_FOLDER/restaurant_pipeline_dag.py', '--cfg-path', '/tmp/tmpqs15lvvd']
+[2026-09-19T21:07:17.013+0000] {standard_task_runner.py:91} INFO - Job 49: Subtask load_orders
+[2026-09-19T21:07:17.014+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=223) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-09-19T21:07:17.016+0000] {standard_task_runner.py:64} INFO - Started process 224 to run task
+[2026-09-19T21:07:17.088+0000] {task_command.py:426} INFO - Running <TaskInstance: restaurant_pipeline.load_orders scheduled__2026-09-18T00:00:00+00:00 [running]> on host db333aec3d12
+[2026-09-19T21:07:17.222+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='restaurant_pipeline' AIRFLOW_CTX_TASK_ID='load_orders' AIRFLOW_CTX_EXECUTION_DATE='2026-09-18T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-09-18T00:00:00+00:00'
+[2026-09-19T21:07:17.223+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-09-19T21:07:17.931+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-09-19T21:07:17.932+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/restaurant_pipeline_dag.py", line 81, in load_orders
+    with duckdb.connect(db_path) as con:
+  File "/opt/airflow/dags/restaurant_pipeline_dag.py", line 93, in load_orders
+    con.execute(
+_duckdb.BinderException: Binder Error: There are no UNIQUE/PRIMARY KEY constraints that refer to this table, specify ON CONFLICT columns manually
+[2026-09-19T21:07:17.948+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=restaurant_pipeline, task_id=load_orders, run_id=scheduled__2026-09-18T00:00:00+00:00, execution_date=20260918T000000, start_date=20260919T210716, end_date=20260919T210717
+[2026-09-19T21:07:17.954+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/context.py:212 AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+[2026-09-19T21:07:17.954+0000] {logging_mixin.py:188} INFO - ALERT: Task 'load_orders' in DAG 'restaurant_pipeline' failed at 2026-09-18 00:00:00+00:00
+[2026-09-19T21:07:17.954+0000] {logging_mixin.py:188} INFO - Log URL: http://localhost:8080/dags/restaurant_pipeline/grid?dag_run_id=scheduled__2026-09-18T00%3A00%3A00%2B00%3A00&task_id=load_orders&map_index=-1&tab=logs
+[2026-09-19T21:07:17.970+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 49 for task load_orders (Binder Error: There are no UNIQUE/PRIMARY KEY constraints that refer to this table, specify ON CONFLICT columns manually; 224)
+[2026-09-19T21:07:17.992+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-09-19T21:07:18.025+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-19T21:07:18.030+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

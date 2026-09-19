@@ -34,3 +34,8 @@ models:
         tests:
           - not_null
 
+  - name: mart_restaurant_daily
+    columns:
+      - name: total_revenue
+        tests:
+          - not_null

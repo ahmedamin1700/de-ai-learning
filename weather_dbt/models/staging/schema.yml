@@ -62,3 +62,11 @@ models:
       - name: order_total
         tests:
           - not_null
+
+  - name: stg_restaurant_orders
+    description: "Raw restaurant orders."
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique

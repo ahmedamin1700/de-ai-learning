@@ -9,6 +9,14 @@ sources:
     #   warn_after: {count: 30, period: day}
     #   error_after: {count: 90, period: day}
     tables:
+      - name: restaurant_orders_raw
+        columns:
+          - name: order_id
+          - name: restaurant_name
+          - name: city
+          - name: amount
+          - name: status
+          - name: order_date
       - name: deliveries
         description: "Raw delivery orders from the orders pipeline."
         columns:
